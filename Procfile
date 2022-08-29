@@ -1,1 +1,1 @@
-web: vindor/bin/hrtoku-php-spsvhr2 public/
+web: vindor/bin/hrtoku-php-apache2 public/
