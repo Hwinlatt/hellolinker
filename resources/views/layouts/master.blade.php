@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
+    <title>Hello Linker</title>
+    <link rel="icon" href="{{ asset('user/img/linklogo-circle.png') }}">
     <!-- MDB icon -->
     <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
     <!-- Font Awesome -->
@@ -28,10 +29,10 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0" style="z-index: 10">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark position-sticky top-0 mainNav" style="z-index: 10">
         <!-- Container wrapper -->
         <div class="navbar-toggler">
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <a class="navbar-brand mt-2 mt-lg-0" href="{{ route('user#home') }}">
                 <img src="{{ asset('user/img/linklogo.jpg') }}" height="40" class="rounded rounded-circle"
                     alt="MDB Logo" />
                 <strong>Movies</strong>
@@ -49,9 +50,9 @@
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Navbar brand -->
-                <a class="navbar-brand mt-2 mt-lg-0 hideMobileView" href="#">
+                <a class="navbar-brand mt-2 mt-lg-0 hideMobileView" href="{{ route('user#home') }}">
                     <img src="{{ asset('user/img/linklogo.jpg') }}" height="40"
-                        class="rounded shadow  rounded-circle" alt="MDB Logo" loading="lazy" />
+                        class="rounded shadow  rounded-circle" alt="Liner Logo" loading="lazy" />
                     <strong>Movies</strong>
                 </a>
                 <!-- Left links -->
@@ -68,9 +69,14 @@
                         <a class="nav-link nav-other" href="#"><span language="eng">Others</span><span
                                 language="mm">အခြား</span></a>
                     </li>
-                    <li>
-
-                    </li>
+                    @if (!empty(Auth::user()))
+                        @if (Auth::user()->role == 'admin')
+                            <li>
+                                <a class="nav-link nav-other"
+                                    href="{{ route('admin#movie_list') }}"><span>Admin-Dashboard</span></a>
+                            </li>
+                        @endif
+                    @endif
                 </ul>
                 <!-- Search Bar -->
                 <div class="nav-item ml-3">
@@ -137,12 +143,13 @@
                     <div class="dropdown">
                         <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                             id="userMore" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                            @if(Auth::user()->profile_photo_path)
-                            <img src="{{asset('storage/profile_photos/'.Auth::user()->profile_photo_path)}}" class="rounded-circle"
-                            width="25" height="25" alt="User Photo" loading="lazy" />
+                            @if (Auth::user()->profile_photo_path)
+                                <img src="{{ asset('storage/profile_photos/' . Auth::user()->profile_photo_path) }}"
+                                    class="rounded-circle" width="25" height="25" alt="User Photo"
+                                    loading="lazy" />
                             @else
-                            <img src="{{asset('storage/user_default.webp')}}" class="rounded-circle"
-                                height="25" alt="User Photo" loading="lazy" />
+                                <img src="{{ asset('storage/user_default.webp') }}" class="rounded-circle"
+                                    height="25" alt="User Photo" loading="lazy" />
                             @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMore">
@@ -320,19 +327,20 @@
     <script src="{{ asset('owncorousel/js/owl.carousel.js') }}"></script>
     <script src="{{ asset('owncorousel/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('user/js/custom.js') }}"></script>
-        <script>
-            if ('{{session("success")}}') {
-                Swal.fire(
+    <script>
+        if ('{{ session('success') }}') {
+            Swal.fire(
                 'Success',
                 '@php echo session("success") @endphp',
                 'success'
-            )}else if ('{{session("error")}}') {
-                Swal.fire(
+            )
+        } else if ('{{ session('error') }}') {
+            Swal.fire(
                 'Fail',
                 '@php echo session("error") @endphp',
                 'error')
-            }
-        </script>
+        }
+    </script>
     @stack('scripts')
 </body>
 

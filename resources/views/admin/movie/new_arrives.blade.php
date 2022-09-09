@@ -1,6 +1,6 @@
 @extends('layouts.admin_master')
 @section('title')
-Movies
+New Arrive Movies
 @endsection
 @section('styles')
 
@@ -10,18 +10,14 @@ Movies
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Movie Table</h3>
+                <h3 class="card-title">New Arrived Movie Table</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
-                        <div class="col-sm-12 col-md-6">Search Key : {{request('searchKey')}}</div>
+                        <div class="col-sm-12 col-md-6">Search Key : New Arrive/{{request('searchKey')}}</div>
                         <div class="col-sm-12 col-md-6"></div>
-                    </div>
-                    <div class="col-md-12 text-end my-2">
-                        <a href="{{ route('admin#movie_insert') }}" class="btn btn-primary"><i
-                                class="fa-solid fa-plus"></i> Insert</a>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 overflow-auto">
@@ -39,7 +35,7 @@ Movies
                                 <tbody>
                                     @foreach ($movies as $movie)
                                     <tr class="align-middle">
-                                        <td><a href="{{asset('storage/movie_photos/'.$movie->image)}}"><img class="w-100" height="80"  src="{{asset('storage/movie_photos/'.$movie->image)}}" alt=""></a></td>
+                                        <td><a href="{{asset('storage/movie_photos/'.$movie->image)}}"><img class="w-100"  src="{{asset('storage/movie_photos/'.$movie->image)}}" alt=""></a></td>
                                         <td>{{$movie->name}} @if($movie->role != 'free') <i class="fa-solid fa-crown text-warning"></i> @endif</td>
                                         <td>
                                             @php
@@ -67,7 +63,7 @@ Movies
                         </div>
                     </div>
                     <div class="row">
-                        <div>{{$movies->appends(request()->query())->links()}}</div>
+                        <div>{{$movies->links()}}</div>
                     </div>
                 </div>
             </div>
@@ -81,8 +77,7 @@ Movies
 @push('scripts')
 <script>
     $(document).ready(function () {
-        activeMenu('.side-movies', '.side-movies-list');
-        $('.searchForm').attr('action','{{route("admin#movie_list")}}');
+        activeMenu('.side-movies', '.side-movies-new_arrive');
 
         if ('{{request("searchKey")}}') {
             $('.searchForm input').val('{{request("searchKey")}}');

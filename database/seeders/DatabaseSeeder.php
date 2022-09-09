@@ -30,5 +30,12 @@ class DatabaseSeeder extends Seeder
             'password'=>'$2y$10$zSLi/UTwM3QMNeNFeM1sQu3V//FB8wWS24Glio7x0tQzlzR5F6yF.',
             'role'=>'admin'
         ]);
+        User::create([
+            'name'=>'User',
+            'email'=>'user@gmail.com',
+            'gender'=>'male',
+            'password'=>'$2y$10$zSLi/UTwM3QMNeNFeM1sQu3V//FB8wWS24Glio7x0tQzlzR5F6yF.',
+            'role'=>'user'
+        ]);
     }
 }

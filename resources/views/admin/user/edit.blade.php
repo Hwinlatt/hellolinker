@@ -1,5 +1,7 @@
 @extends('layouts.admin_master')
-
+@section('title')
+    Users/{{$user->name}}/Edit
+@endsection
 @section('routes')
 <div class="content-header">
     <div class="container-fluid">
@@ -93,6 +95,43 @@
                 </div>
             </form>
         </div>
+
+        <!-- Other Butttons-->
+        <div class="card card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">Others</h3>
+            </div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                    @if($user->id != Auth::user()->id)
+                        <form action="{{route('admin#user_destroy',$user->id)}}" method="POST" id="delForm" class="d-none">
+                        @csrf
+                        <input type="passwrd" name="password" class="delComPassword">
+                        </form>
+                        <button class="btn btn-danger m-1" id="delAccount"><i class="fa-solid fa-trash"></i> Delete Account</button>
+                        @endif
+                        <div class="position-relative">
+                            <a href="{{route('admin#user_rm_device',$user->id)}}"  class="btn btn-warning m-1">
+                                Remove Devices <span class="badge bg-danger">{{count($devices)}}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h5>Devices</h5>
+                        @if(count($devices) > 0)
+                        <ul class="list-group list-group-light">
+                            @foreach ($devices as $device)
+                            <li class="list-group-item text-light">{{$device->user_agent}} <br>
+                                <span class="fw-bold text-muted"><i class="fa-regular fa-clock"></i> {{date('d-m-Y h:i:s A',$device->last_activity)}}</span>
+                            </li>
+                            @endforeach
+                          </ul>
+                          @else
+                          -There is no Device to show!     
+                        @endif
+                    </div>
+                </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -101,6 +140,18 @@
 <script>
     $(document).ready(function () {
         activeMenu('.side-users');
+    });
+
+    //Del account
+    $('#delAccount').click(function (e) { 
+        e.preventDefault();
+        let text = prompt('Please Enter Your Password')
+        if (text.length > 5) {
+            $('.delComPassword').val(text)
+            $('#delForm').submit();
+        }else{
+            $('#delAccount').click();
+        }
     });
 </script>
 @endpush

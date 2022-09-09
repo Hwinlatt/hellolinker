@@ -21,7 +21,7 @@ View Movie
         @if(request('view'))
         <a class="nav-link bg-success" href="{{route('admin#movie_edit',$movie->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
         @endif
-        <a class="nav-link bg-danger" href="{{url()->previous()}}">Close</a>
+        <a class="nav-link bg-danger" href="{{route('admin#movie_list')}}">Close</a>
     </div>
 </div>
 @endsection
@@ -185,7 +185,9 @@ View Movie
 <script>
     $(document).ready(function () {
         $('input').attr("autocomplete","none")
-        activeMenu('.side-movies', '.side-movies-list')
+        activeMenu('.side-movies', '.side-movies-list');
+        $('.searchForm').attr('action','{{route("admin#movie_list")}}');
+
     });
 </script>
 @if(request('view'))

@@ -24,7 +24,7 @@ class Movie extends Model
 
     public static function search($db,$key)
     {
-        return $db->orWhere('name','like','%'.$key.'%')
+         $db->Where('name','like','%'.$key.'%')
             ->orWhere('actors','like','%'.$key.'%')
             ->orWhere('studio','like','%'.$key.'%')
             ->orWhere('director','like','%'.$key.'%')
